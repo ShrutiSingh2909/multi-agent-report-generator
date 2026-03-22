@@ -1,5 +1,7 @@
 from fpdf import FPDF
 import datetime
+import os
+
 
 class ReportPDF(FPDF):
     def header(self):
@@ -74,7 +76,9 @@ def generate_pdf(topic: str, content: str, filename: str = "report.pdf") -> str:
                 pdf.multi_cell(0, 7, line)
 
         pdf.output(filename)
-        return filename
+        print(f"PDF saved to: {filename}")
+        print(f"File exists: {os.path.exists(filename)}")
+        print(f"File size: {os.path.getsize(filename)} bytes")
 
     except Exception as e:
         return f"PDF generation failed: {str(e)}"

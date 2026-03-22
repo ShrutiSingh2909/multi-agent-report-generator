@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import time
 import tempfile
 from dotenv import load_dotenv
 from core.crew import build_crew
@@ -36,12 +37,10 @@ if st.button("🚀 Generate Report", use_container_width=True, type="primary"):
     if not topic:
         st.error("Please enter a topic first!")
     else:
-        # Progress tracking
         progress = st.progress(0)
         status   = st.empty()
 
         try:
-            # Step 1 - Research
             status.info("🔍 Agent 1: Researching the web...")
             progress.progress(10)
 
@@ -50,34 +49,34 @@ if st.button("🚀 Generate Report", use_container_width=True, type="primary"):
             status.info("🔍 Agent 1: Researching... 📊 Agent 2: Analyzing... ✍️ Agent 3: Writing...")
             progress.progress(30)
 
-            # Run crew
             with st.spinner("Agents are working... this takes 2-3 minutes ⏳"):
                 result = crew.kickoff()
 
             progress.progress(80)
             status.info("📄 Generating PDF report...")
 
-            # Generate PDF
             report_content = str(result)
 
-            with tempfile.NamedTemporaryFile(
+            # Fixed PDF generation
+            tmp = tempfile.NamedTemporaryFile(
                 delete=False, suffix=".pdf", prefix="report_"
-            ) as tmp:
-                pdf_path = tmp.name
+            )
+            pdf_path = tmp.name
+            tmp.close()
 
             generate_pdf(topic, report_content, pdf_path)
+            time.sleep(1)
+
             progress.progress(100)
             status.success("✅ Report generated successfully!")
 
             st.divider()
 
-            # Show report preview
             st.subheader("📋 Report Preview")
             st.markdown(report_content)
 
             st.divider()
 
-            # Download button
             with open(pdf_path, "rb") as f:
                 pdf_bytes = f.read()
 
@@ -89,7 +88,6 @@ if st.button("🚀 Generate Report", use_container_width=True, type="primary"):
                 use_container_width=True
             )
 
-            # Cleanup
             os.unlink(pdf_path)
 
         except Exception as e:
@@ -101,7 +99,7 @@ st.divider()
 st.markdown(
     """
     <div style='text-align:center; color:gray; font-size:12px'>
-    Powered by CrewAI · Gemini · DuckDuckGo · ChromaDB · Streamlit
+    Powered by CrewAI · Groq · DuckDuckGo · ChromaDB · Streamlit
     </div>
     """,
     unsafe_allow_html=True
