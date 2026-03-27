@@ -1,4 +1,4 @@
-# 🤖 Multi-Agent AI Report Generator
+# Multi-Agent AI Report Generator
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![CrewAI](https://img.shields.io/badge/CrewAI-Multi--Agent-purple)
@@ -170,13 +170,13 @@ litellm
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Shruti**
 - GitHub: [@ShrutiSingh2909](https://github.com/ShrutiSingh2909)
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
