@@ -23,6 +23,6 @@ def get_researcher(llm):
         tools=[search_tool, save_memory_tool],
         llm=llm,
         verbose=True,
-        max_iter=5,
-        max_rpm=3
+        max_iter=2,
+        max_rpm=2
     )
